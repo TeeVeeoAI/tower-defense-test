@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -9,9 +10,8 @@ public class Game1 : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     private Texture2D pixel;
-    private Texture2D cirT;
     private Circle cir;
-    private Rectangle box;
+    private Track track;
     private Color boxColor;
 
     public Game1()
@@ -36,10 +36,25 @@ public class Game1 : Game
 
         // TODO: use this.Content to load your game content here
 
-        cirT = Content.Load<Texture2D>("cir");
         pixel = Content.Load<Texture2D>("Pixel");
         cir = new Circle(new Vector2(400, 400), 20);
-        box = new Rectangle(430, 400, 20, 20);
+
+        track = new Track(
+            new Rectangle[]
+            {
+                new Rectangle(200, 0, 50, 200),
+                new Rectangle(200, 200, 300, 50),
+                new Rectangle(500, 200, 50, 300),
+                new Rectangle(500, 500, 300, 50),
+                new Rectangle(800, 350, 50, 200),
+                new Rectangle(800, 300, 300, 50),
+                new Rectangle(1100, 300, 50, 600),
+                new Rectangle(1100, 900, 300, 50),
+                new Rectangle(1400, 650, 50, 300),
+                new Rectangle(1400, 650, 520, 50)
+            }, pixel
+        );
+
         boxColor = Color.White;
 
     }
@@ -51,10 +66,6 @@ public class Game1 : Game
 
         // TODO: Add your update logic here
 
-        if (cir.Intersects(box)){
-            boxColor = Color.Red;
-        }
-
         base.Update(gameTime);
     }
 
@@ -65,10 +76,28 @@ public class Game1 : Game
         // TODO: Add your drawing code here
 
         _spriteBatch.Begin();
-        _spriteBatch.Draw(pixel, box, boxColor);
-        _spriteBatch.Draw(cirT, new Rectangle((int)cir.Pos.X, (int)cir.Pos.Y, (int)(cir.Radius*2), (int)(cir.Radius*2)), Color.White);
+        DrawCircle(cir.Pos, cir.Radius, Color.Green);
+        track.DrawTrack(_spriteBatch);
         _spriteBatch.End();
 
         base.Draw(gameTime);
+    }
+
+    void DrawCircle(Vector2 center, float radius, Color color)
+    {
+        int r = (int)radius;
+        int cx = (int)center.X;
+        int cy = (int)center.Y;
+
+        for (int x = -r; x <= r; x++)
+        {
+            for (int y = -r; y <= r; y++)
+            {
+                if (x * x + y * y <= r * r) // Check if inside circle
+                {
+                    _spriteBatch.Draw(pixel, new Vector2(cx + x, cy + y), color);
+                }
+            }
+        }
     }
 }

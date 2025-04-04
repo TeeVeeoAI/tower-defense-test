@@ -4,11 +4,9 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/Gamer/Documents/GitHub/tower-defense--Priv/Content/cir.png</File>
-    <File>C:/Users/Gamer/Documents/GitHub/tower-defense--Priv/Content/Pixel.png</File>
+    <File>C:/Users/tores/OneDrive/Documents/GitHub/tower-defense--Priv/Content/Pixel.png</File>
   </SourceFiles>
   <DestFiles>
-    <File xsi:nil="true" />
     <File xsi:nil="true" />
   </DestFiles>
 </SourceFileCollection>

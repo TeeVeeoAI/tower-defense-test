@@ -12,7 +12,7 @@ public class Game1 : Game
     private Texture2D pixel;
     private Circle cir;
     private Track track;
-    private Color boxColor;
+    private List<Enemy> enemies = new List<Enemy>();
 
     public Game1()
     {
@@ -54,15 +54,19 @@ public class Game1 : Game
                 new Rectangle(1400, 650, 520, 50)
             }, pixel
         );
-
-        boxColor = Color.White;
-
     }
 
     protected override void Update(GameTime gameTime)
     {
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
+
+        enemies.Add(new Enemy(20, new Vector2(track.track[0].Location.X, track.track[0].Location.Y), pixel, new Vector2(3, 3), Color.Red));
+
+        foreach(Enemy enemy in enemies){
+
+            enemy.Update(gameTime);
+        }
 
         // TODO: Add your update logic here
 
@@ -76,28 +80,13 @@ public class Game1 : Game
         // TODO: Add your drawing code here
 
         _spriteBatch.Begin();
-        DrawCircle(cir.Pos, cir.Radius, Color.Green);
+        cir.DrawCircle(Color.Green, _spriteBatch, pixel);
         track.DrawTrack(_spriteBatch);
+        foreach (Enemy enemy in enemies){
+            enemy.Draw(_spriteBatch);
+        }
         _spriteBatch.End();
 
         base.Draw(gameTime);
-    }
-
-    void DrawCircle(Vector2 center, float radius, Color color)
-    {
-        int r = (int)radius;
-        int cx = (int)center.X;
-        int cy = (int)center.Y;
-
-        for (int x = -r; x <= r; x++)
-        {
-            for (int y = -r; y <= r; y++)
-            {
-                if (x * x + y * y <= r * r) // Check if inside circle
-                {
-                    _spriteBatch.Draw(pixel, new Vector2(cx + x, cy + y), color);
-                }
-            }
-        }
     }
 }

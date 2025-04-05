@@ -1,6 +1,5 @@
-using System.Security;
 using Microsoft.Xna.Framework;
-using SharpDX.MediaFoundation;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace tower_defense__Priv
 {
@@ -10,10 +9,14 @@ namespace tower_defense__Priv
         private float radius;
         public Vector2 Pos{ get => pos; }
         public float Radius{ get => radius; }
+        public void ChangePos(Vector2 pos, string pas){ 
+            if (pas == "Enemy")
+                this.pos = pos;
+        }
 
-        public Circle(Vector2 pos, float r){
+        public Circle(Vector2 pos, float radius){
             this.pos = pos;
-            this.radius = r;
+            this.radius = radius;
         }
 
         public bool ContainsPoint(Point point)
@@ -53,6 +56,23 @@ namespace tower_defense__Priv
             
             return Vector2.Distance(circle.pos, pos) < radius + circle.Radius;
 
+        }
+
+        public void DrawCircle(Color color, SpriteBatch _spriteBatch, Texture2D texture){
+            int r = (int)radius;
+            int cx = (int)pos.X;
+            int cy = (int)pos.Y;
+
+            for (int x = -r; x <= r; x++)
+            {
+                for (int y = -r; y <= r; y++)
+                {
+                    if (x * x + y * y <= r * r) // Check if inside circle
+                    {
+                        _spriteBatch.Draw(texture, new Vector2(cx + x, cy + y), color);
+                    }
+                }
+            }
         }
     }
 }

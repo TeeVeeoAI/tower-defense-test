@@ -14,7 +14,7 @@ namespace tower_defense__Priv
         }
 
         public void UpdateTrack(GameTime gameTime){
-
+            
         }
 
         public void DrawTrack(SpriteBatch spriteBatch){

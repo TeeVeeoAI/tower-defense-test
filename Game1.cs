@@ -40,8 +40,7 @@ public class Game1 : Game
         cir = new Circle(new Vector2(400, 400), 20);
 
         track = new Track(
-            new Rectangle[]
-            {
+            [
                 new Rectangle(200, 0, 50, 200),
                 new Rectangle(200, 200, 300, 50),
                 new Rectangle(500, 200, 50, 300),
@@ -52,8 +51,10 @@ public class Game1 : Game
                 new Rectangle(1100, 900, 300, 50),
                 new Rectangle(1400, 650, 50, 300),
                 new Rectangle(1400, 650, 520, 50)
-            }, pixel
+            ], pixel
         );
+
+        enemies.Add(new Enemy(20, new Vector2(track.track[0].Location.X, track.track[0].Location.Y), pixel, new Vector2(3, 3), track, Color.Red));
     }
 
     protected override void Update(GameTime gameTime)
@@ -61,7 +62,7 @@ public class Game1 : Game
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
 
-        enemies.Add(new Enemy(20, new Vector2(track.track[0].Location.X, track.track[0].Location.Y), pixel, new Vector2(3, 3), Color.Red));
+        
 
         foreach(Enemy enemy in enemies){
 

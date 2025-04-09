@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>C:/Users/tores/OneDrive/Documents/GitHub/tower-defense--Priv/Content/Pixel.png</SourceFile>
-  <SourceTime>2025-04-04T21:17:16.8692335+02:00</SourceTime>
-  <DestFile>C:/Users/tores/OneDrive/Documents/GitHub/tower-defense--Priv/Content/bin/Windows/Content/Pixel.xnb</DestFile>
-  <DestTime>2025-04-04T21:18:34.5919594+02:00</DestTime>
+  <SourceFile>C:/Github/tower-defense--Priv/Content/Pixel.png</SourceFile>
+  <SourceTime>2025-04-09T12:48:11.8669451+02:00</SourceTime>
+  <DestFile>C:/Github/tower-defense--Priv/Content/bin/Windows/Content/Pixel.xnb</DestFile>
+  <DestTime>2025-04-09T12:48:37.6288541+02:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2024-08-16T19:05:56+02:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

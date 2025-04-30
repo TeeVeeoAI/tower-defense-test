@@ -1,4 +1,3 @@
-C:\Users\Gamer\Documents\GitHub\tower-defense--Priv\bin\Debug\net8.0-windows\Content\cir.xnb
 C:\Users\Gamer\Documents\GitHub\tower-defense--Priv\bin\Debug\net8.0-windows\Content\Pixel.xnb
 C:\Users\Gamer\Documents\GitHub\tower-defense--Priv\bin\Debug\net8.0-windows\tower-defense--Priv.exe
 C:\Users\Gamer\Documents\GitHub\tower-defense--Priv\bin\Debug\net8.0-windows\tower-defense--Priv.deps.json

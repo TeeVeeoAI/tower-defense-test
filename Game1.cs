@@ -10,9 +10,11 @@ public class Game1 : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     private Texture2D pixel;
-    private Circle cir;
     private Track track;
     private List<Enemy> enemies = new List<Enemy>();
+    private List<Hero> heroes = new List<Hero>();
+    private KeyboardState kState;
+    private MouseState mState;
 
     public Game1()
     {
@@ -37,7 +39,6 @@ public class Game1 : Game
         // TODO: use this.Content to load your game content here
 
         pixel = Content.Load<Texture2D>("Pixel");
-        cir = new Circle(new Vector2(400, 400), 20);
 
         track = new Track(
             [
@@ -54,19 +55,31 @@ public class Game1 : Game
             ], pixel
         );
 
-        enemies.Add(new Enemy(20, new Vector2(track.track[0].Location.X, track.track[0].Location.Y), pixel, new Vector2(3, 3), track, Color.Red));
+        enemies.Add(new Enemy(20, new Vector2(track.TrackHB[0].Location.X+25, track.TrackHB[0].Location.Y+25), pixel, new Vector2(3, 3), track, Color.Red));
+        heroes.Add(new Hero(new Vector2(400, 400), pixel, new Color(30, 40, 70), new Color(20,20,20, 100), 70f, 200f, enemies));
+        heroes.Add(new Hero(new Vector2(700, 400), pixel, new Color(30, 40, 70), new Color(20,20,20, 100), 70f, 200f, enemies));
     }
 
     protected override void Update(GameTime gameTime)
     {
-        if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+
+        kState = Keyboard.GetState();
+        mState = Mouse.GetState();
+
+        if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || kState.IsKeyDown(Keys.Escape))
             Exit();
 
         
 
         foreach(Enemy enemy in enemies){
-
             enemy.Update(gameTime);
+        }
+
+        foreach(Hero hero in heroes){
+            hero.Update(gameTime);
+            foreach(Bullet bullet in hero.Bullets){
+                bullet.Update(gameTime);
+            }
         }
 
         // TODO: Add your update logic here
@@ -81,10 +94,15 @@ public class Game1 : Game
         // TODO: Add your drawing code here
 
         _spriteBatch.Begin();
-        cir.DrawCircle(Color.Green, _spriteBatch, pixel);
         track.DrawTrack(_spriteBatch);
         foreach (Enemy enemy in enemies){
             enemy.Draw(_spriteBatch);
+        }
+        foreach (Hero hero in heroes){
+            hero.Draw(_spriteBatch);
+            foreach (Bullet bullet in hero.Bullets){
+                bullet.Draw(_spriteBatch);
+            }
         }
         _spriteBatch.End();
 

@@ -6,15 +6,18 @@ namespace tower_defense__Priv
 {
     public class Track
     {
-        public Rectangle[] track { get; private set; }
-        public Texture2D pixel { get; private set; }
-        public List<Vector2> Waypoints { get; private set; }
+        private Rectangle[] track;
+        private List<Vector2> waypoints;
+        private Texture2D pixel;
+
+        public Rectangle[] TrackHB { get => track; }
+        public List<Vector2> Waypoints { get => waypoints; }
 
         public Track(Rectangle[] track, Texture2D pixel){
             this.track = track;
             this.pixel = pixel;
 
-            Waypoints = new List<Vector2>();
+            waypoints = new List<Vector2>();
 
             // Use corners of each rectangle to define path directionally
             for (int i = 0; i < track.Length; i++)

@@ -5,13 +5,18 @@ namespace tower_defense__Priv
 {
     public class Enemy
     {
-        public Circle hitbox { get; private set; }
-        public Vector2 pos { get; private set; }
-        public Texture2D texture { get; private set; }
-        public Color color { get; private set; }
+        private Circle hitbox;
+        private Vector2 pos;
+        private Color color;
+        private Texture2D texture;
         private int currentWaypointIndex = 0;
         private float speed = 100f;
         private Track track;
+
+        public Circle Hitbox { get => hitbox; }
+        public Vector2 Pos { get => pos; }
+        public Color Color { get => color; }
+
 
         public Enemy(float radius, Vector2 pos, Texture2D texture, Vector2 velocity, Track track, Color color){
             this.pos = pos;

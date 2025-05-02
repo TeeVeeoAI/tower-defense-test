@@ -4,36 +4,37 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace tower_defense__Priv
 {
-    public class Hero
+    public abstract class Hero
     {
-        private Circle hitbox;
-        private Circle range;
-        private List<Bullet> bullets = new List<Bullet>();
-        private Vector2 pos;
-        private Color color;
-        private Color rangeColor;
-        private Texture2D texture;
-        private List<Enemy> enemies;
-        private double shootDelay = 1.25;
-        private double timeWhenShoot = 0;
+        protected Circle hitbox;
+        protected Circle range;
+        protected List<Weapon> weapons = new List<Weapon>();
+        protected Vector2 pos;
+        protected Color color;
+        protected Color rangeColor;
+        protected Texture2D texture;
+        protected List<Enemy> enemies;
+        protected double shootDelay;
+        protected double timeWhenShoot = 0;
 
-        public Circle Hitbox { get => hitbox;}
-        public Circle Range { get => range;}
-        public List<Bullet> Bullets { get => bullets; }
+        public Circle Hitbox { get => hitbox; }
+        public Circle Range { get => range; }
+        public List<Weapon> Weapons { get => weapons; }
         
-        public Hero(Vector2 pos, Texture2D texture, Color color, Color rangeColor, float size, float rangeRadius, List<Enemy> enemies){
+        public Hero(Vector2 pos, Texture2D texture, Color color, Color rangeColor, float size, float rangeRadius, List<Enemy> enemies, double shootDelay){
             this.pos = pos;
             this.texture = texture;
             this.color = color;
             this.rangeColor = rangeColor;
             this.enemies = enemies;
+            this.shootDelay = shootDelay;
 
             this.hitbox = new Circle(this.pos, size);
             this.range = new Circle(this.pos, rangeRadius);
         }
 
         public void Update(GameTime gameTime){
-            Shoot(gameTime);
+            Attack(gameTime);
         }
 
         public void Draw(SpriteBatch spriteBatch){
@@ -41,31 +42,6 @@ namespace tower_defense__Priv
             range.DrawCircle(rangeColor, spriteBatch, texture);
         }
 
-        public void Shoot(GameTime gameTime){
-            foreach(Enemy enemy in enemies){
-                if (range.Intersects(enemy.Hitbox) && gameTime.TotalGameTime.TotalSeconds - timeWhenShoot > shootDelay){
-                    Fire(gameTime, enemy);
-                }
-            }
-        }
-
-        public void Fire(GameTime gameTime, Enemy enemy){
-            int count = 0;
-            foreach(Bullet bullet in bullets){
-                if (bullet.Target == enemy){
-                    count++;
-                    timeWhenShoot = gameTime.TotalGameTime.TotalSeconds;
-                } 
-                if (count >= 4) return;
-            }
-            bullets.Add(new Bullet
-                (
-                    new Rectangle((int)pos.X-5, (int)pos.Y-5, 10, 10), 
-                    texture, 
-                    pos, 
-                    new Vector2(40, 40), 
-                    enemy
-                ));
-        }
+        public abstract void Attack(GameTime gameTime);
     }
 }

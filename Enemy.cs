@@ -3,26 +3,36 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace tower_defense__Priv
 {
-    public class Enemy
+    public abstract class Enemy
     {
-        private Circle hitbox;
-        private Vector2 pos;
-        private Color color;
-        private Texture2D texture;
-        private int currentWaypointIndex = 0;
-        private float speed = 100f;
-        private Track track;
+        protected Circle hitbox;
+        protected Vector2 pos;
+        protected Color color;
+        protected Texture2D texture;
+        protected int currentWaypointIndex = 0;
+        protected Vector2 velocity;
+        protected Track track;
+        protected int hp;
+        protected EnemyType type;
+        public enum EnemyType{
+            Red = 1,
+            Green,
+            Blue
+        }
 
         public Circle Hitbox { get => hitbox; }
         public Vector2 Pos { get => pos; }
         public Color Color { get => color; }
+        public int HP { get => hp; }
 
 
-        public Enemy(float radius, Vector2 pos, Texture2D texture, Vector2 velocity, Track track, Color color){
+        public Enemy(float radius, Vector2 pos, Texture2D texture, Vector2 velocity, Track track, Color color, int hp, EnemyType type){
             this.pos = pos;
             this.texture = texture;
             this.track = track;
+            this.velocity = velocity;
             this.color = color;
+            this.hp = hp;
 
             this.hitbox = new Circle(pos, radius);
         }
@@ -42,13 +52,32 @@ namespace tower_defense__Priv
 
             direction.Normalize();
             float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            pos += direction * speed * delta;
+            pos += direction * velocity * delta;
 
-            hitbox.ChangePos(pos, this.GetType().ToString().Remove(0, 20));
+            hitbox.ChangePos(pos, "Enemy");
         }
 
         public void Draw(SpriteBatch spriteBatch){
             hitbox.DrawCircle(color, spriteBatch, texture);
+        }
+
+        public void Hit(int damage){
+            hp -= damage;
+            DownGrade();
+        }
+
+        protected void DownGrade(){
+            switch (hp){
+                case (int)EnemyType.Red:
+                    type = EnemyType.Red;
+                    break;
+                case (int)EnemyType.Green:
+                    type = EnemyType.Green;
+                    break;
+                case (int)EnemyType.Blue:
+                    type = EnemyType.Blue;
+                    break;
+            }
         }
     }
 }

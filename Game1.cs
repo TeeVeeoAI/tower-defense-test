@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -15,6 +16,7 @@ public class Game1 : Game
     private List<Hero> heroes = new List<Hero>();
     private KeyboardState kState;
     private MouseState mState;
+    private double lastBloon = 0;
 
     public Game1()
     {
@@ -55,13 +57,18 @@ public class Game1 : Game
             ], pixel
         );
 
-        enemies.Add(new Enemy(20, new Vector2(track.TrackHB[0].Location.X+25, track.TrackHB[0].Location.Y+25), pixel, new Vector2(3, 3), track, Color.Red));
-        heroes.Add(new Hero(new Vector2(400, 400), pixel, new Color(30, 40, 70), new Color(20,20,20, 100), 70f, 200f, enemies));
-        heroes.Add(new Hero(new Vector2(700, 400), pixel, new Color(30, 40, 70), new Color(20,20,20, 100), 70f, 200f, enemies));
+        enemies.Add(new Red(20, new Vector2(track.TrackHB[0].Location.X+25, track.TrackHB[0].Location.Y+25), pixel, track));
+        heroes.Add(new Gunner(new Vector2(400, 400), pixel, new Color(30, 40, 70), new Color(20,20,20, 100), enemies));
+        heroes.Add(new Gunner(new Vector2(700, 400), pixel, new Color(30, 40, 70), new Color(20,20,20, 100), enemies));
     }
 
     protected override void Update(GameTime gameTime)
     {
+
+        if (gameTime.TotalGameTime.TotalSeconds > lastBloon + 1){
+            lastBloon = gameTime.TotalGameTime.TotalSeconds;
+            enemies.Add(new Green(20, new Vector2(track.TrackHB[0].Location.X+25, track.TrackHB[0].Location.Y+25), pixel, track));
+        }
 
         kState = Keyboard.GetState();
         mState = Mouse.GetState();
@@ -77,10 +84,12 @@ public class Game1 : Game
 
         foreach(Hero hero in heroes){
             hero.Update(gameTime);
-            foreach(Bullet bullet in hero.Bullets){
+            foreach(Bullet bullet in hero.Weapons){
                 bullet.Update(gameTime);
             }
         }
+
+        HitCheck(gameTime);
 
         // TODO: Add your update logic here
 
@@ -100,12 +109,37 @@ public class Game1 : Game
         }
         foreach (Hero hero in heroes){
             hero.Draw(_spriteBatch);
-            foreach (Bullet bullet in hero.Bullets){
+            foreach (Bullet bullet in hero.Weapons){
                 bullet.Draw(_spriteBatch);
             }
         }
+        DrawHeroSelect(gameTime);
         _spriteBatch.End();
-
+        
         base.Draw(gameTime);
+    }
+
+    public void HitCheck(GameTime gameTime){
+        for (int i = 0; i < enemies.Count; i++){
+            for (int j = 0; j < heroes.Count; j++){
+                for (int k = 0; k < heroes[j].Weapons.Count; k++){
+                    if (enemies[i].Hitbox.Intersects(heroes[j].Weapons[k].Hitbox)){
+                        
+                        enemies[i].Hit(heroes[j].Weapons[k].Damage);
+                        heroes[j].Weapons[k].Kill(enemies[i]);
+
+                        if (enemies[i].HP <= 0) enemies.RemoveAt(i);
+
+                        break;
+                    }
+                    if (heroes[j].Weapons[k].IsAlive == false) 
+                        heroes[j].Weapons.RemoveAt(k);
+                }
+            }
+        }
+    }
+    public void DrawHeroSelect(GameTime gameTime){
+        _spriteBatch.Draw(pixel, new Rectangle(1520, 0, 400, 1080), new Color(20, 20, 20, 100));
+
     }
 }

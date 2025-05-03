@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -128,12 +127,21 @@ public class Game1 : Game
                         enemies[i].Hit(heroes[j].Weapons[k].Damage);
                         heroes[j].Weapons[k].Kill(enemies[i]);
 
-                        if (enemies[i].HP <= 0) enemies.RemoveAt(i);
+                        if (enemies[i].HP <= 0){
 
-                        break;
+                            if(enemies[i] is Blue) {
+                                enemies.Add(new Green(20, new Vector2(enemies[i].Pos.X, enemies[i].Pos.Y), pixel, track, enemies[i].CurrentWaypointIndex));
+                            } else if(enemies[i] is Green){
+                                enemies.Add(new Red(20, new Vector2(enemies[i].Pos.X, enemies[i].Pos.Y), pixel, track, enemies[i].CurrentWaypointIndex));
+                            }
+                            enemies.RemoveAt(i);
+                            i--;
+                        }
                     }
-                    if (heroes[j].Weapons[k].IsAlive == false) 
+                    if (heroes[j].Weapons[k].IsAlive == false) {
                         heroes[j].Weapons.RemoveAt(k);
+                        k--;
+                    }
                 }
             }
         }

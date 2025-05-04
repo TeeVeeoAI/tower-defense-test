@@ -16,23 +16,26 @@ namespace tower_defense__Priv
         protected EnemyType type;
         public enum EnemyType{
             Red = 1,
-            Green,
-            Blue
+            Green = 2,
+            Blue = 3
         }
 
         public Circle Hitbox { get => hitbox; }
         public Vector2 Pos { get => pos; }
         public Color Color { get => color; }
         public int HP { get => hp; }
+        public int CurrentWaypointIndex { get => currentWaypointIndex; }
 
 
-        public Enemy(float radius, Vector2 pos, Texture2D texture, Vector2 velocity, Track track, Color color, int hp, EnemyType type){
+        public Enemy(float radius, Vector2 pos, Texture2D texture, Vector2 velocity, Track track, Color color, int hp, EnemyType type, int currentWaypointIndex){
             this.pos = pos;
             this.texture = texture;
             this.track = track;
             this.velocity = velocity;
             this.color = color;
             this.hp = hp;
+            this.type = type;
+            this.currentWaypointIndex = currentWaypointIndex;
 
             this.hitbox = new Circle(pos, radius);
         }
@@ -63,21 +66,6 @@ namespace tower_defense__Priv
 
         public void Hit(int damage){
             hp -= damage;
-            DownGrade();
-        }
-
-        protected void DownGrade(){
-            switch (hp){
-                case (int)EnemyType.Red:
-                    type = EnemyType.Red;
-                    break;
-                case (int)EnemyType.Green:
-                    type = EnemyType.Green;
-                    break;
-                case (int)EnemyType.Blue:
-                    type = EnemyType.Blue;
-                    break;
-            }
         }
     }
 }

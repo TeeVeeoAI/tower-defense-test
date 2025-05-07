@@ -18,11 +18,12 @@ namespace tower_defense__Priv
                 }
             }
         }
+
         public void Slice(GameTime gameTime, Enemy enemy){
             int count = 0;
             foreach(Sword Sword in weapons){
                 if (Sword.Target == enemy) count++;
-                if (count >= 4) return;
+                if (count >= 1) return;
             }
             timeWhenShoot = gameTime.TotalGameTime.TotalSeconds;
         }

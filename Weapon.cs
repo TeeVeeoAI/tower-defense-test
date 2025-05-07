@@ -27,6 +27,10 @@ namespace tower_defense__Priv
             this.texture = texture;
         }
 
+        public abstract void Update(GameTime gameTime);
+
+        public abstract void Draw(SpriteBatch spriteBatch);
+
         public abstract void Kill(Enemy target);
     }
 }

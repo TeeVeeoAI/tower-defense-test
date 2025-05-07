@@ -57,6 +57,7 @@ public class Game1 : Game
         );
 
         enemies.Add(new Red(20, new Vector2(track.TrackHB[0].Location.X+25, track.TrackHB[0].Location.Y+25), pixel, track));
+        heroes.Add(new Swordsman(new Vector2(250, 30), pixel, new Color(40,70,30), new Color(20,20,20, 100), enemies));
         heroes.Add(new Gunner(new Vector2(400, 400), pixel, new Color(30, 40, 70), new Color(20,20,20, 100), enemies));
         heroes.Add(new Gunner(new Vector2(700, 400), pixel, new Color(30, 40, 70), new Color(20,20,20, 100), enemies));
     }
@@ -83,8 +84,8 @@ public class Game1 : Game
 
         foreach(Hero hero in heroes){
             hero.Update(gameTime);
-            foreach(Bullet bullet in hero.Weapons){
-                bullet.Update(gameTime);
+            foreach(Weapon weapon in hero.Weapons){
+                weapon.Update(gameTime);
             }
         }
 
@@ -108,8 +109,8 @@ public class Game1 : Game
         }
         foreach (Hero hero in heroes){
             hero.Draw(_spriteBatch);
-            foreach (Bullet bullet in hero.Weapons){
-                bullet.Draw(_spriteBatch);
+            foreach (Weapon weapon in hero.Weapons){
+                weapon.Draw(_spriteBatch);
             }
         }
         DrawHeroSelect(gameTime);
@@ -137,7 +138,7 @@ public class Game1 : Game
                             enemies.RemoveAt(i);
                             i--;
                         }
-                    }
+                    } else if (enemies[i].Hitbox)
                     if (heroes[j].Weapons[k].IsAlive == false) {
                         heroes[j].Weapons.RemoveAt(k);
                         k--;

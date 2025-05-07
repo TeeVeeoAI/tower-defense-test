@@ -6,6 +6,8 @@ namespace tower_defense__Priv
 {
     public class Swordsman : Hero
     {
+        private float swordRotaion;
+
         public Swordsman(Vector2 pos, Texture2D texture, Color color, Color rangeColor, List<Enemy> enemies) 
             : base(pos, texture, color, rangeColor, 30f, 100f, enemies, 5){
         }
@@ -16,6 +18,14 @@ namespace tower_defense__Priv
                     Slice(gameTime, enemy);
                     break;
                 }
+            }
+            foreach(Sword sword in weapons){
+                sword.Update(gameTime, pos, swordRotaion);
+            }
+            if (swordRotaion >= 360f){
+                swordRotaion = 0;
+            } else {
+                swordRotaion += 0.1f;
             }
         }
 
@@ -31,7 +41,8 @@ namespace tower_defense__Priv
                     5, 
                     new Rectangle((int)pos.X, (int)pos.Y, 5, 5), 
                     texture, 
-                    range
+                    range,
+                    0
                 ));
             timeWhenShoot = gameTime.TotalGameTime.TotalSeconds;
         }

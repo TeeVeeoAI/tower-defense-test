@@ -23,7 +23,7 @@ namespace tower_defense__Priv
             this.direction = direction;
         }
 
-        public void Update(GameTime gameTime) {
+        public override void Update(GameTime gameTime) {
 
             float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
             position += direction * velocity * delta;
@@ -33,7 +33,7 @@ namespace tower_defense__Priv
             hitbox.Location = position.ToPoint();
         }
 
-        public void Draw(SpriteBatch spriteBatch){
+        public override void Draw(SpriteBatch spriteBatch){
             spriteBatch.Draw(texture, hitbox, Color.White);
         }
 

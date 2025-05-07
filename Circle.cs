@@ -58,6 +58,55 @@ namespace tower_defense__Priv
 
         }
 
+        public bool Intersects(Vector2[] polygon)
+        {
+            // Check for intersection with polygon edges
+            for (int i = 0; i < polygon.Length; i++)
+            {
+                Vector2 start = polygon[i];
+                Vector2 end = polygon[(i + 1) % polygon.Length];
+
+                if (LineIntersectsCircle(start, end, pos, Radius))
+                    return true;
+            }
+
+            // Check if the circle's center is inside the polygon
+            if (PointInPolygon(pos, polygon))
+                return true;
+
+            return false;
+        }
+
+        private bool LineIntersectsCircle(Vector2 a, Vector2 b, Vector2 center, float radius)
+        {
+            Vector2 ab = b - a;
+            Vector2 ac = center - a;
+
+            float abLengthSquared = ab.LengthSquared();
+            float projection = Vector2.Dot(ac, ab) / abLengthSquared;
+            projection = MathHelper.Clamp(projection, 0f, 1f);
+
+            Vector2 closestPoint = a + projection * ab;
+            float distanceSquared = Vector2.DistanceSquared(center, closestPoint);
+
+            return distanceSquared <= radius * radius;
+        }
+
+        private bool PointInPolygon(Vector2 point, Vector2[] polygon)
+        {
+            bool inside = false;
+            for (int i = 0, j = polygon.Length - 1; i < polygon.Length; j = i++)
+            {
+                if (((polygon[i].Y > point.Y) != (polygon[j].Y > point.Y)) &&
+                    (point.X < (polygon[j].X - polygon[i].X) * 
+                    (point.Y - polygon[i].Y) / (polygon[j].Y - polygon[i].Y) + polygon[i].X))
+                {
+                    inside = !inside;
+                }
+            }
+            return inside;
+        }
+
         public void DrawCircle(Color color, SpriteBatch _spriteBatch, Texture2D texture){
             int r = (int)radius;
             int cx = (int)pos.X;

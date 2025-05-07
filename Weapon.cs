@@ -12,6 +12,7 @@ namespace tower_defense__Priv
         protected Texture2D texture;
         protected Rectangle hitbox; 
         protected Enemy target;
+        protected RotatebleHitbox trueHitbox = new RotatebleHitbox();
         protected int damage;
         protected bool isAlive = true;
 
@@ -19,6 +20,7 @@ namespace tower_defense__Priv
         public int Damage { get => damage; }
         public bool IsAlive { get => isAlive; }
         public Rectangle Hitbox { get => hitbox; }
+        public RotatebleHitbox TureHitbox{ get => trueHitbox; }
 
         public Weapon(Enemy target, int damage, Rectangle hitbox, Texture2D texture){
             this.target = target; 
@@ -26,6 +28,13 @@ namespace tower_defense__Priv
             this.hitbox = hitbox; 
             this.texture = texture;
         }
+
+        public Weapon(int damage, Rectangle hitbox, Texture2D texture){
+            this.damage = damage;
+            this.hitbox = hitbox;
+            this.texture = texture;
+        }
+
 
         public abstract void Update(GameTime gameTime);
 

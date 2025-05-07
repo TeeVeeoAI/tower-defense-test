@@ -57,7 +57,8 @@ public class Game1 : Game
         );
 
         enemies.Add(new Red(20, new Vector2(track.TrackHB[0].Location.X+25, track.TrackHB[0].Location.Y+25), pixel, track));
-        heroes.Add(new Swordsman(new Vector2(250, 30), pixel, new Color(40,70,30), new Color(20,20,20, 100), enemies));
+        enemies.Add(new Blue(20, new Vector2(track.TrackHB[0].Location.X+25, track.TrackHB[0].Location.Y+25), pixel, track));
+        heroes.Add(new Swordsman(new Vector2(500, 400), pixel, new Color(40,70,30), new Color(20,20,20, 100), enemies));
         heroes.Add(new Gunner(new Vector2(400, 400), pixel, new Color(30, 40, 70), new Color(20,20,20, 100), enemies));
         heroes.Add(new Gunner(new Vector2(700, 400), pixel, new Color(30, 40, 70), new Color(20,20,20, 100), enemies));
     }
@@ -123,7 +124,7 @@ public class Game1 : Game
         for (int i = 0; i < enemies.Count; i++){
             for (int j = 0; j < heroes.Count; j++){
                 for (int k = 0; k < heroes[j].Weapons.Count; k++){
-                    if (enemies[i].Hitbox.Intersects(heroes[j].Weapons[k].Hitbox)){
+                    if (enemies[i].Hitbox.Intersects(heroes[j].Weapons[k].Hitbox) || enemies[i].Hitbox.Intersects(heroes[j].Weapons[k].TureHitbox.Corners)){
                         
                         enemies[i].Hit(heroes[j].Weapons[k].Damage);
                         heroes[j].Weapons[k].Kill(enemies[i]);
@@ -136,12 +137,10 @@ public class Game1 : Game
                                 enemies.Add(new Red(20, new Vector2(enemies[i].Pos.X, enemies[i].Pos.Y), pixel, track, enemies[i].CurrentWaypointIndex));
                             }
                             enemies.RemoveAt(i);
-                            i--;
                         }
-                    } else if (enemies[i].Hitbox)
+                    }
                     if (heroes[j].Weapons[k].IsAlive == false) {
                         heroes[j].Weapons.RemoveAt(k);
-                        k--;
                     }
                 }
             }

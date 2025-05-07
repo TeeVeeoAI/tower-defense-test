@@ -6,12 +6,11 @@ namespace tower_defense__Priv
 {
     public class Sword : Weapon
     {
-        private RotatebleHitbox trueHitbox;
         private float width = 50f;
         private Circle range;
 
-        public Sword(Enemy target, int damage, Rectangle hitbox, Texture2D texture, Circle range, float rotation) 
-            : base(target, damage, hitbox, texture){ 
+        public Sword(int damage, Rectangle hitbox, Texture2D texture, Circle range, float rotation) 
+            : base(damage, hitbox, texture){ 
             
             this.range = range;
             trueHitbox = new RotatebleHitbox(new Vector2(hitbox.X+25, hitbox.Y-10), width, range.Radius, rotation, new Vector2(width / 2, range.Radius));
@@ -55,9 +54,7 @@ namespace tower_defense__Priv
         }
 
         public override void Kill(Enemy target){
-            damage -= target.HP + damage;
 
-            if (damage <= 0) isAlive = false;
         }
     }
 }

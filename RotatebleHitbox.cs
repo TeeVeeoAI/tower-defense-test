@@ -10,6 +10,15 @@ namespace tower_defense__Priv
             Update(position, width, height, rotation, pivot);
         }
 
+        public RotatebleHitbox(){
+            Corners = new Vector2[4]{
+                new Vector2(0, 0),
+                new Vector2(0, 0),
+                new Vector2(0, 0),
+                new Vector2(0, 0)
+            };
+        }
+
         public void Update(Vector2 position, float width, float height, float rotation, Vector2 pivot){
             // The pivot point is now the bottom center of the hitbox
 

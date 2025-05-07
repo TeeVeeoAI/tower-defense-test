@@ -12,10 +12,14 @@ namespace tower_defense__Priv
             : base(target, damage, hitbox, texture){ 
             
             this.range = range;
-            trueHitbox = new SwordsRect(new Vector2(hitbox.Location.X, hitbox.Location.Y), new Vector2())
+            trueHitbox = new SwordsRect(new Vector2(hitbox.Location.X, hitbox.Location.Y), new Vector2(hitbox.Location.X - range.Radius, hitbox.Location.Y), range.Radius);
 
-            float circle = MathHelper.Pi * 2;
-            rotationAngle %= circle;
+        }
+
+        public void Update(GameTime gameTime){
+            if (trueHitbox.Max.X > range.Pos.X + range.Radius){
+                isAlive = false;
+            }
         }
 
         public override void Kill(Enemy target){

@@ -25,6 +25,14 @@ namespace tower_defense__Priv
                 if (Sword.Target == enemy) count++;
                 if (count >= 1) return;
             }
+            weapons.Add(new Sword
+                (
+                    enemy, 
+                    5, 
+                    new Rectangle((int)pos.X, (int)pos.Y, 5, 5), 
+                    texture, 
+                    range
+                ));
             timeWhenShoot = gameTime.TotalGameTime.TotalSeconds;
         }
     }

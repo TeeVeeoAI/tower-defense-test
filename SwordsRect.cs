@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
 
 namespace tower_defense__Priv
 {
@@ -10,7 +11,9 @@ namespace tower_defense__Priv
         private Vector2 rotatePos, max;
         private float length;
 
-        public SwordsRect(rotatePos, max, length){
+        public Vector2 Max{ get => max; }
+
+        public SwordsRect(Vector2 rotatePos, Vector2 max, float length){
             this.rotatePos = rotatePos;
             this.max = max;
             this.length = length;

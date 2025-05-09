@@ -8,6 +8,7 @@ namespace tower_defense__Priv
     {
         public Gunner(Vector2 pos, Texture2D texture, Color color, Color rangeColor, List<Enemy> enemies)
             : base(pos, texture, color, rangeColor, 20f, 400f, enemies, 1){
+            
         }
 
         public override void Attack(GameTime gameTime){

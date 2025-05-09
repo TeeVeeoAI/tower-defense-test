@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Github\\tower-defense--Priv\\tower-defense--Priv.csproj": {}
+    "C:\\Users\\Admin\\Documents\\GitHub\\tower-defense--Priv\\tower-defense--Priv.csproj": {}
   },
   "projects": {
-    "C:\\Github\\tower-defense--Priv\\tower-defense--Priv.csproj": {
+    "C:\\Users\\Admin\\Documents\\GitHub\\tower-defense--Priv\\tower-defense--Priv.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Github\\tower-defense--Priv\\tower-defense--Priv.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Documents\\GitHub\\tower-defense--Priv\\tower-defense--Priv.csproj",
         "projectName": "tower-defense--Priv",
-        "projectPath": "C:\\Github\\tower-defense--Priv\\tower-defense--Priv.csproj",
-        "packagesPath": "C:\\Users\\tosi07001\\.nuget\\packages\\",
-        "outputPath": "C:\\Github\\tower-defense--Priv\\obj\\",
+        "projectPath": "C:\\Users\\Admin\\Documents\\GitHub\\tower-defense--Priv\\tower-defense--Priv.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Admin\\Documents\\GitHub\\tower-defense--Priv\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\tosi07001\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -73,7 +73,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.408/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

@@ -145,10 +145,12 @@ public class Game1 : Game
                                 enemies.Add(new Red(20, new Vector2(enemies[i].Pos.X, enemies[i].Pos.Y), pixel, track, enemies[i].CurrentWaypointIndex));
                             }
                             enemies.RemoveAt(i);
+                            break;
                         }
                     }
                     if (heroes[j].Weapons[k].IsAlive == false) {
                         heroes[j].Weapons.RemoveAt(k);
+                        break;
                     }
                 }
             }

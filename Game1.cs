@@ -15,7 +15,8 @@ public class Game1 : Game
     private List<Hero> heroes = new List<Hero>();
     private KeyboardState kState;
     private MouseState mState;
-    private double lastBloon = 0;
+    private double[] lastBloon = new double[3];
+    private Vector2 spawnPoint;
 
     public Game1()
     {
@@ -56,9 +57,11 @@ public class Game1 : Game
             ], pixel
         );
 
-        enemies.Add(new Red(20, new Vector2(track.TrackHB[0].Location.X+25, track.TrackHB[0].Location.Y+25), pixel, track));
-        enemies.Add(new Blue(20, new Vector2(track.TrackHB[0].Location.X+25, track.TrackHB[0].Location.Y+25), pixel, track));
-        heroes.Add(new Swordsman(new Vector2(500, 400), pixel, new Color(40,70,30), new Color(20,20,20, 100), enemies));
+        spawnPoint = new Vector2(track.TrackHB[0].Location.X+25, track.TrackHB[0].Location.Y+25);
+
+        enemies.Add(new Red(20, spawnPoint, pixel, track));
+        enemies.Add(new Blue(20, spawnPoint, pixel, track));
+        heroes.Add(new Swordsman(new Vector2(460, 400), pixel, new Color(40,70,30), new Color(20,20,20, 100), enemies));
         heroes.Add(new Gunner(new Vector2(400, 400), pixel, new Color(30, 40, 70), new Color(20,20,20, 100), enemies));
         heroes.Add(new Gunner(new Vector2(700, 400), pixel, new Color(30, 40, 70), new Color(20,20,20, 100), enemies));
     }
@@ -66,9 +69,14 @@ public class Game1 : Game
     protected override void Update(GameTime gameTime)
     {
 
-        if (gameTime.TotalGameTime.TotalSeconds > lastBloon + 1){
-            lastBloon = gameTime.TotalGameTime.TotalSeconds;
-            enemies.Add(new Green(20, new Vector2(track.TrackHB[0].Location.X+25, track.TrackHB[0].Location.Y+25), pixel, track));
+        if (gameTime.TotalGameTime.TotalSeconds > lastBloon[(int)Enemy.EnemyType.Green] + 1){
+            lastBloon[(int)Enemy.EnemyType.Green-1] = gameTime.TotalGameTime.TotalSeconds;
+            enemies.Add(new Green(20, spawnPoint, pixel, track));
+        }
+        
+        if (gameTime.TotalGameTime.TotalSeconds > lastBloon[(int)Enemy.EnemyType.Green] + 3){
+            lastBloon[(int)Enemy.EnemyType.Blue-1] = gameTime.TotalGameTime.TotalSeconds;
+            enemies.Add(new Blue(20, spawnPoint, pixel, track));
         }
 
         kState = Keyboard.GetState();
@@ -137,10 +145,14 @@ public class Game1 : Game
                                 enemies.Add(new Red(20, new Vector2(enemies[i].Pos.X, enemies[i].Pos.Y), pixel, track, enemies[i].CurrentWaypointIndex));
                             }
                             enemies.RemoveAt(i);
+                            i--;
+                            return;
                         }
                     }
                     if (heroes[j].Weapons[k].IsAlive == false) {
                         heroes[j].Weapons.RemoveAt(k);
+                        k--;
+                        return;
                     }
                 }
             }

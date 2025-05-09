@@ -31,7 +31,7 @@ namespace tower_defense__Priv
                     new Rectangle((int)pos.X-5, (int)pos.Y-5, 10, 10), 
                     texture, 
                     pos, 
-                    new Vector2(800, 800), // VELOCITY (x, y)
+                    new Vector2(1500, 1500), // VELOCITY (x, y)
                     enemy,
                     2
                 ));

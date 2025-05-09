@@ -129,9 +129,9 @@ public class Game1 : Game
     }
 
     public void HitCheck(GameTime gameTime){
-        for (int i = 0; i < enemies.Count; i++){
-            for (int j = 0; j < heroes.Count; j++){
-                for (int k = 0; k < heroes[j].Weapons.Count; k++){
+        for (int j = 0; j < heroes.Count; j++){
+            for (int k = 0; k < heroes[j].Weapons.Count; k++){
+                for (int i = 0; i < enemies.Count; i++){
                     if (enemies[i].Hitbox.Intersects(heroes[j].Weapons[k].Hitbox) || enemies[i].Hitbox.Intersects(heroes[j].Weapons[k].TureHitbox.Corners)){
                         
                         enemies[i].Hit(heroes[j].Weapons[k].Damage);
@@ -145,11 +145,13 @@ public class Game1 : Game
                                 enemies.Add(new Red(20, new Vector2(enemies[i].Pos.X, enemies[i].Pos.Y), pixel, track, enemies[i].CurrentWaypointIndex));
                             }
                             enemies.RemoveAt(i);
+                            i--;
                         }
                     }
-                    if (heroes[j].Weapons[k].IsAlive == false) {
-                        heroes[j].Weapons.RemoveAt(k);
-                    }
+                }
+                if (heroes[j].Weapons[k].IsAlive == false) {
+                    heroes[j].Weapons.RemoveAt(k);
+                    k--;
                 }
             }
         }

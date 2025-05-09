@@ -73,7 +73,7 @@ public class Game1 : Game
             lastBloon[(int)Enemy.EnemyType.Green-1] = gameTime.TotalGameTime.TotalSeconds;
             enemies.Add(new Green(20, spawnPoint, pixel, track));
         }
-        
+
         if (gameTime.TotalGameTime.TotalSeconds > lastBloon[(int)Enemy.EnemyType.Blue-1] + 3){
             lastBloon[(int)Enemy.EnemyType.Blue-1] = gameTime.TotalGameTime.TotalSeconds;
             enemies.Add(new Blue(20, spawnPoint, pixel, track));
@@ -145,12 +145,10 @@ public class Game1 : Game
                                 enemies.Add(new Red(20, new Vector2(enemies[i].Pos.X, enemies[i].Pos.Y), pixel, track, enemies[i].CurrentWaypointIndex));
                             }
                             enemies.RemoveAt(i);
-                            break;
                         }
                     }
                     if (heroes[j].Weapons[k].IsAlive == false) {
                         heroes[j].Weapons.RemoveAt(k);
-                        break;
                     }
                 }
             }

@@ -6,14 +6,21 @@ namespace tower_defense__Priv
 {
     public class Gunner : Hero
     {
-        public Gunner(Vector2 pos, Texture2D texture, Color color, Color rangeColor, List<Enemy> enemies)
-            : base(pos, texture, color, rangeColor, 20f, 400f, enemies, 1){
+        public Gunner(Vector2 pos, Texture2D texture, List<Enemy> enemies)
+            : base(pos, texture, new Color(30, 40, 70), new Color(20,20,20, 100), 20f, 400f, enemies, 1){
+            
+        }
+        public Gunner(Vector2 pos, Texture2D texture)
+            : base(pos, texture, new Color(30, 40, 70), new Color(20,20,20, 100), 20f, 0f, new List<Enemy>(), 1){
             
         }
 
-        public override void Attack(GameTime gameTime){
-            foreach(Enemy enemy in enemies){
-                if (range.Intersects(enemy.Hitbox) && gameTime.TotalGameTime.TotalSeconds - timeWhenShoot > shootDelay){
+        public override void Attack(GameTime gameTime)
+        {
+            foreach (Enemy enemy in enemies)
+            {
+                if (range.Intersects(enemy.Hitbox) && gameTime.TotalGameTime.TotalSeconds - timeWhenShoot > shootDelay)
+                {
                     Fire(gameTime, enemy);
                     break;
                 }

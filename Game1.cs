@@ -17,6 +17,9 @@ public class Game1 : Game
     private MouseState mState;
     private double[] lastBloon = new double[3];
     private Vector2 spawnPoint;
+    private Hero hovering;
+    private Keys gunnerK, swordsmanK;
+    private Vector2 hoverPos;
 
     public Game1()
     {
@@ -42,6 +45,12 @@ public class Game1 : Game
 
         pixel = Content.Load<Texture2D>("Pixel");
 
+        gunnerK = Keys.D1;
+        swordsmanK = Keys.D2;
+        hoverPos = new Vector2(2000, 1100);
+        hovering = new HoverHero(hoverPos, pixel);
+        
+
         track = new Track(
             [
                 new Rectangle(200, 0, 50, 200),
@@ -61,21 +70,29 @@ public class Game1 : Game
 
         enemies.Add(new Green(20, spawnPoint, pixel, track));
         enemies.Add(new Blue(20, spawnPoint, pixel, track));
-        heroes.Add(new Gunner(new Vector2(400, 400), pixel, new Color(30, 40, 70), new Color(20,20,20, 100), enemies));
-        heroes.Add(new Gunner(new Vector2(700, 400), pixel, new Color(30, 40, 70), new Color(20,20,20, 100), enemies));
-        heroes.Add(new Swordsman(new Vector2(460, 400), pixel, new Color(40,70,30), new Color(20,20,20, 100), enemies));
+        heroes.Add(new Gunner(new Vector2(400, 400), pixel, enemies));
+        heroes.Add(new Gunner(new Vector2(700, 400), pixel, enemies));
+        heroes.Add(new Swordsman(new Vector2(460, 400), pixel, enemies));
     }
 
     protected override void Update(GameTime gameTime)
     {
+        if (hovering is Swordsman){
+            hoverPos = new Vector2(mState.X, mState.Y);
+            hovering = new Swordsman(hoverPos, pixel);
+        }
+        if (hovering is Gunner){
+            hoverPos = new Vector2(mState.X, mState.Y);
+            hovering = new Gunner(hoverPos, pixel);
+        }
 
-        if (gameTime.TotalGameTime.TotalSeconds > lastBloon[(int)Enemy.EnemyType.Green-1] + 1){
-            lastBloon[(int)Enemy.EnemyType.Green-1] = gameTime.TotalGameTime.TotalSeconds;
+        if (gameTime.TotalGameTime.TotalSeconds > lastBloon[(int)Enemy.EnemyType.Green - 1] + 1){
+            lastBloon[(int)Enemy.EnemyType.Green - 1] = gameTime.TotalGameTime.TotalSeconds;
             enemies.Add(new Green(20, spawnPoint, pixel, track));
         }
 
         if (gameTime.TotalGameTime.TotalSeconds > lastBloon[(int)Enemy.EnemyType.Blue-1] + 3){
-            lastBloon[(int)Enemy.EnemyType.Blue-1] = gameTime.TotalGameTime.TotalSeconds;
+            lastBloon[(int)Enemy.EnemyType.Blue - 1] = gameTime.TotalGameTime.TotalSeconds;
             enemies.Add(new Blue(20, spawnPoint, pixel, track));
         }
 
@@ -99,6 +116,17 @@ public class Game1 : Game
         }
 
         HitCheck(gameTime);
+
+        if (kState.IsKeyDown(gunnerK)) {
+            hoverPos = new Vector2(mState.X, mState.Y);
+            hovering = new Gunner(hoverPos, pixel);
+        } else if (kState.IsKeyDown(swordsmanK)){
+            hoverPos = new Vector2(mState.X, mState.Y);
+            hovering = new Swordsman(hoverPos, pixel);
+        } else if (kState.IsKeyDown(Keys.M)){
+            hoverPos = new Vector2(2000, 1100);
+            hovering = new HoverHero(hoverPos, pixel);
+        }
 
         // TODO: Add your update logic here
 
@@ -158,6 +186,8 @@ public class Game1 : Game
     }
     public void DrawHeroSelect(GameTime gameTime){
         _spriteBatch.Draw(pixel, new Rectangle(1520, 0, 400, 1080), new Color(20, 20, 20, 100));
-
+        if (!(hovering is HoverHero)){
+            hovering.Draw(_spriteBatch);
+        }
     }
 }

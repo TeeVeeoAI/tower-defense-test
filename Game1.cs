@@ -10,16 +10,18 @@ public class Game1 : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     private Texture2D pixel;
+    private SpriteFont font;
     private Track track;
     private List<Enemy> enemies = new List<Enemy>();
     private List<Hero> heroes = new List<Hero>();
-    private KeyboardState kState;
-    private MouseState mState;
+    private KeyboardState kState, oldKState;
+    private MouseState mState, oldMState;
     private double[] lastBloon = new double[3];
     private Vector2 spawnPoint;
     private Hero hovering;
-    private Keys gunnerK, swordsmanK;
+    private Keys gunnerK, swordsmanK, unselectK, placeK;
     private Vector2 hoverPos;
+    private double money = 0;
 
     public Game1()
     {
@@ -44,9 +46,12 @@ public class Game1 : Game
         // TODO: use this.Content to load your game content here
 
         pixel = Content.Load<Texture2D>("Pixel");
+        font = Content.Load<SpriteFont>("Font");
 
         gunnerK = Keys.D1;
         swordsmanK = Keys.D2;
+        unselectK = Keys.U;
+        placeK = Keys.P;
         hoverPos = new Vector2(2000, 1100);
         hovering = new HoverHero(hoverPos, pixel);
         
@@ -77,13 +82,25 @@ public class Game1 : Game
 
     protected override void Update(GameTime gameTime)
     {
+        kState = Keyboard.GetState();
+        mState = Mouse.GetState();
+
+        enemies.Sort((a, b) => b.Progress.CompareTo(a.Progress));
         if (hovering is Swordsman){
             hoverPos = new Vector2(mState.X, mState.Y);
             hovering = new Swordsman(hoverPos, pixel);
+            if (kState.IsKeyDown(placeK) && oldKState.IsKeyUp(placeK) && money > 1000){
+                heroes.Add(new Swordsman(hoverPos, pixel, enemies));
+                money -= 1000;
+            }
         }
         if (hovering is Gunner){
             hoverPos = new Vector2(mState.X, mState.Y);
             hovering = new Gunner(hoverPos, pixel);
+            if (kState.IsKeyDown(placeK) && oldKState.IsKeyUp(placeK) && money > 500){
+                heroes.Add(new Gunner(hoverPos, pixel, enemies));
+                money -= 500;
+            }
         }
 
         if (gameTime.TotalGameTime.TotalSeconds > lastBloon[(int)Enemy.EnemyType.Green - 1] + 1){
@@ -95,9 +112,6 @@ public class Game1 : Game
             lastBloon[(int)Enemy.EnemyType.Blue - 1] = gameTime.TotalGameTime.TotalSeconds;
             enemies.Add(new Blue(20, spawnPoint, pixel, track));
         }
-
-        kState = Keyboard.GetState();
-        mState = Mouse.GetState();
 
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || kState.IsKeyDown(Keys.Escape))
             Exit();
@@ -123,12 +137,15 @@ public class Game1 : Game
         } else if (kState.IsKeyDown(swordsmanK)){
             hoverPos = new Vector2(mState.X, mState.Y);
             hovering = new Swordsman(hoverPos, pixel);
-        } else if (kState.IsKeyDown(Keys.M)){
+        } else if (kState.IsKeyDown(unselectK)){
             hoverPos = new Vector2(2000, 1100);
             hovering = new HoverHero(hoverPos, pixel);
         }
 
         // TODO: Add your update logic here
+
+        oldKState = kState;
+        oldMState = mState;
 
         base.Update(gameTime);
     }
@@ -151,6 +168,7 @@ public class Game1 : Game
             }
         }
         DrawHeroSelect(gameTime);
+        _spriteBatch.DrawString(font, "$" + money.ToString(), new Vector2(0, 0), Color.White);
         _spriteBatch.End();
         
         base.Draw(gameTime);
@@ -166,11 +184,14 @@ public class Game1 : Game
                         heroes[j].Weapons[k].Kill(enemies[i]);
 
                         if (enemies[i].HP <= 0){
+                            money += 20;
 
                             if(enemies[i] is Blue) {
                                 enemies.Add(new Green(20, new Vector2(enemies[i].Pos.X, enemies[i].Pos.Y), pixel, track, enemies[i].CurrentWaypointIndex));
+                                money += 40;
                             } else if(enemies[i] is Green){
                                 enemies.Add(new Red(20, new Vector2(enemies[i].Pos.X, enemies[i].Pos.Y), pixel, track, enemies[i].CurrentWaypointIndex));
+                                money += 20;
                             }
                             enemies.RemoveAt(i);
                             i--;

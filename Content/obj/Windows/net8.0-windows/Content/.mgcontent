@@ -4,8 +4,8 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Github/tower-defense--Priv/Content/Font.spritefont</File>
-    <File>C:/Github/tower-defense--Priv/Content/Pixel.png</File>
+    <File>C:/Users/Gamer/Documents/GitHub/tower-defense--Priv/Content/Font.spritefont</File>
+    <File>C:/Users/Gamer/Documents/GitHub/tower-defense--Priv/Content/Pixel.png</File>
   </SourceFiles>
   <DestFiles>
     <File xsi:nil="true" />

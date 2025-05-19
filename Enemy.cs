@@ -15,18 +15,14 @@ namespace tower_defense__Priv
         protected Track track;
         protected int hp;
         protected EnemyType type;
-        public enum EnemyType{
-            Red = 1,
-            Green = 2,
-            Blue = 3
-        }
 
-        public Circle Hitbox { get => hitbox; }
-        public Vector2 Pos { get => pos; }
-        public Color Color { get => color; }
-        public int HP { get => hp; }
+        public EnemyType EnemyType      { get => type; }
+        public Circle Hitbox            { get => hitbox; }
+        public Vector2 Pos              { get => pos; }
+        public Color Color              { get => color; }
+        public int HP                   { get => hp; }
         public int CurrentWaypointIndex { get => currentWaypointIndex; }
-        public float Progress { get => progress; }
+        public float Progress           { get => progress; }
 
 
         public Enemy(float radius, Vector2 pos, Texture2D texture, Vector2 velocity, Track track, Color color, int hp, EnemyType type, int currentWaypointIndex)

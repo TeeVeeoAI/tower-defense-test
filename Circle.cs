@@ -7,14 +7,16 @@ namespace tower_defense__Priv
     {
         private Vector2 pos;
         private float radius;
-        public Vector2 Pos{ get => pos; }
-        public float Radius{ get => radius; }
-        public void ChangePos(Vector2 pos, string pas){ 
+        public Vector2 Pos { get => pos; }
+        public float Radius { get => radius; }
+        public void ChangePos(Vector2 pos, string pas)
+        {
             if (pas == "Enemy")
                 this.pos = pos;
         }
 
-        public Circle(Vector2 pos, float radius){
+        public Circle(Vector2 pos, float radius)
+        {
             this.pos = pos;
             this.radius = radius;
         }
@@ -27,7 +29,8 @@ namespace tower_defense__Priv
 
 
         // Intersect for just Recatangle
-        public bool Intersects(Rectangle rectangle){
+        public bool Intersects(Rectangle rectangle)
+        {
 
             Point[] corners =
             [
@@ -37,7 +40,8 @@ namespace tower_defense__Priv
                 new Point(rectangle.Left, rectangle.Bottom)
             ];
 
-            foreach (Point corner in corners){
+            foreach (Point corner in corners)
+            {
                 if (ContainsPoint(corner))
                     return true;
             }
@@ -52,8 +56,9 @@ namespace tower_defense__Priv
         }
 
         // Intersect for just Circle
-        public bool Intersects(Circle circle){
-            
+        public bool Intersects(Circle circle)
+        {
+
             return Vector2.Distance(circle.pos, pos) < radius + circle.Radius;
 
         }
@@ -98,7 +103,7 @@ namespace tower_defense__Priv
             for (int i = 0, j = polygon.Length - 1; i < polygon.Length; j = i++)
             {
                 if (((polygon[i].Y > point.Y) != (polygon[j].Y > point.Y)) &&
-                    (point.X < (polygon[j].X - polygon[i].X) * 
+                    (point.X < (polygon[j].X - polygon[i].X) *
                     (point.Y - polygon[i].Y) / (polygon[j].Y - polygon[i].Y) + polygon[i].X))
                 {
                     inside = !inside;
@@ -107,7 +112,8 @@ namespace tower_defense__Priv
             return inside;
         }
 
-        public void DrawCircle(Color color, SpriteBatch _spriteBatch, Texture2D texture){
+        public void DrawCircle(Color color, SpriteBatch _spriteBatch, Texture2D texture)
+        {
             int r = (int)radius;
             int cx = (int)pos.X;
             int cy = (int)pos.Y;

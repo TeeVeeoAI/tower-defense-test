@@ -9,6 +9,8 @@ public class Game1 : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
+    private Color[] herosCo;
+    private Circle heroSelectSM, heroSelectG;
     private Texture2D pixel;
     private SpriteFont font;
     private Track track;
@@ -22,6 +24,7 @@ public class Game1 : Game
     private Keys gunnerK, swordsmanK, unselectK, placeK;
     private Vector2 hoverPos;
     private double money = 0;
+    
 
     public Game1()
     {
@@ -54,6 +57,13 @@ public class Game1 : Game
         placeK = Keys.P;
         hoverPos = new Vector2(2000, 1100);
         hovering = new HoverHero(hoverPos, pixel);
+
+        herosCo = [
+            new Color(40,70,30),
+            new Color(30, 40, 70)
+        ];
+        heroSelectSM = new Circle(new Vector2(1000, 1000), 30);
+        heroSelectG = new Circle(new Vector2(400, 500), 20);
         
 
         track = new Track(
@@ -103,13 +113,13 @@ public class Game1 : Game
             }
         }
 
-        if (gameTime.TotalGameTime.TotalSeconds > lastBloon[(int)Enemy.EnemyType.Green - 1] + 1){
-            lastBloon[(int)Enemy.EnemyType.Green - 1] = gameTime.TotalGameTime.TotalSeconds;
+        if (gameTime.TotalGameTime.TotalSeconds > lastBloon[(int)EnemyType.Green - 1] + 1){
+            lastBloon[(int)EnemyType.Green - 1] = gameTime.TotalGameTime.TotalSeconds;
             enemies.Add(new Green(20, spawnPoint, pixel, track));
         }
 
-        if (gameTime.TotalGameTime.TotalSeconds > lastBloon[(int)Enemy.EnemyType.Blue-1] + 3){
-            lastBloon[(int)Enemy.EnemyType.Blue - 1] = gameTime.TotalGameTime.TotalSeconds;
+        if (gameTime.TotalGameTime.TotalSeconds > lastBloon[(int)EnemyType.Blue-1] + 3){
+            lastBloon[(int)EnemyType.Blue - 1] = gameTime.TotalGameTime.TotalSeconds;
             enemies.Add(new Blue(20, spawnPoint, pixel, track));
         }
 
@@ -207,6 +217,11 @@ public class Game1 : Game
     }
     public void DrawHeroSelect(GameTime gameTime){
         _spriteBatch.Draw(pixel, new Rectangle(1520, 0, 400, 1080), new Color(20, 20, 20, 100));
+        
+        heroSelectSM.DrawCircle(herosCo[0] ,_spriteBatch, pixel);
+        heroSelectG.DrawCircle(herosCo[1], _spriteBatch, pixel);
+        
+        
         if (!(hovering is HoverHero)){
             hovering.Draw(_spriteBatch);
         }

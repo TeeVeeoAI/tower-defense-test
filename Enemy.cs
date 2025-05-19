@@ -15,6 +15,7 @@ namespace tower_defense__Priv
         protected Track track;
         protected int hp;
         protected EnemyType type;
+        protected bool attEnd;
 
         public EnemyType EnemyType      { get => type; }
         public Circle Hitbox            { get => hitbox; }
@@ -23,6 +24,7 @@ namespace tower_defense__Priv
         public int HP                   { get => hp; }
         public int CurrentWaypointIndex { get => currentWaypointIndex; }
         public float Progress           { get => progress; }
+        public bool AttEnd              { get => attEnd; }
 
 
         public Enemy(float radius, Vector2 pos, Texture2D texture, Vector2 velocity, Track track, Color color, int hp, EnemyType type, int currentWaypointIndex)
@@ -36,6 +38,7 @@ namespace tower_defense__Priv
             this.type = type;
             this.currentWaypointIndex = currentWaypointIndex;
             this.progress = currentWaypointIndex / track.Waypoints.Count;
+            this.attEnd = false;
 
             this.hitbox = new Circle(pos, radius);
         }
@@ -45,7 +48,10 @@ namespace tower_defense__Priv
             progress = currentWaypointIndex / track.Waypoints.Count;
 
             if (currentWaypointIndex >= track.Waypoints.Count)
+            {
+                attEnd = true;
                 return;
+            }
 
             int totalWaypoints = track.Waypoints.Count - 1;
 

@@ -2,8 +2,8 @@ namespace tower_defense__Priv
 {
     public enum EnemyType
     {
-        Red = 1,
-        Green = 2,
-        Blue = 3
+        Red = 0,
+        Green = 1,
+        Blue = 2
     }
 }

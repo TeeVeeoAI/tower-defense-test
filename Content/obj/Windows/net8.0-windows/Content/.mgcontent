@@ -5,9 +5,11 @@
   <Config />
   <SourceFiles>
     <File>C:/Users/tores/OneDrive/Documents/GitHub/tower-defense--Priv/Content/Font.spritefont</File>
+    <File>C:/Users/tores/OneDrive/Documents/GitHub/tower-defense--Priv/Content/Font2.spritefont</File>
     <File>C:/Users/tores/OneDrive/Documents/GitHub/tower-defense--Priv/Content/Pixel.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
   </DestFiles>

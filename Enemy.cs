@@ -27,7 +27,7 @@ namespace tower_defense__Priv
         public bool AttEnd              { get => attEnd; }
 
 
-        public Enemy(float radius, Vector2 pos, Texture2D texture, Vector2 velocity, Track track, Color color, int hp, EnemyType type, int currentWaypointIndex)
+        public Enemy(Vector2 pos, Texture2D texture, Vector2 velocity, Track track, Color color, int hp, EnemyType type, int currentWaypointIndex)
         {
             this.pos = pos;
             this.texture = texture;
@@ -40,7 +40,7 @@ namespace tower_defense__Priv
             this.progress = currentWaypointIndex / track.Waypoints.Count;
             this.attEnd = false;
 
-            this.hitbox = new Circle(pos, radius);
+            this.hitbox = new Circle(pos, 20);
         }
 
         public void Update(GameTime gameTime){

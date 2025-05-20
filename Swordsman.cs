@@ -9,7 +9,7 @@ namespace tower_defense__Priv
         private float swordRotaion;
 
         public Swordsman(Vector2 pos, Texture2D texture, List<Enemy> enemies) 
-            : base(pos, texture, new Color(40,70,30), new Color(20,20,20, 100), 30f, 100f, enemies, 5){
+            : base(pos, texture, new Color(40,70,30), new Color(20,20,20, 20), 30f, 100f, enemies, 5){
 
             weapons.Add(new Sword
                 (
@@ -21,7 +21,7 @@ namespace tower_defense__Priv
                 ));
         }
         public Swordsman(Vector2 pos, Texture2D texture)
-            : base(pos, texture, new Color(40, 70, 30), new Color(20, 20, 20, 100), 30f, 0f, new List<Enemy>(), 5){ 
+            : base(pos, texture, new Color(40, 70, 30), new Color(20, 20, 20, 20), 30f, 100f, new List<Enemy>(), 5){ 
                 
             }
 

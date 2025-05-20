@@ -37,9 +37,10 @@ namespace tower_defense__Priv
             Attack(gameTime);
         }
 
-        public void Draw(SpriteBatch spriteBatch){
+        public void Draw(SpriteBatch spriteBatch, bool hovering){
+            if (hovering) range.DrawCircle(rangeColor, spriteBatch, texture);
+            
             hitbox.DrawCircle(color, spriteBatch, texture);
-            range.DrawCircle(rangeColor, spriteBatch, texture);
         }
 
         public abstract void Attack(GameTime gameTime);

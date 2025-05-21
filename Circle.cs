@@ -118,6 +118,8 @@ namespace tower_defense__Priv
             int cx = (int)pos.X;
             int cy = (int)pos.Y;
 
+            int thickness = 1; // thickness of the outline
+
             for (int x = -r; x <= r; x++)
             {
                 for (int y = -r; y <= r; y++)
@@ -125,6 +127,10 @@ namespace tower_defense__Priv
                     if (x * x + y * y <= r * r) // Check if inside circle
                     {
                         _spriteBatch.Draw(texture, new Vector2(cx + x, cy + y), color);
+                        if (x * x + y * y >= ((r - thickness) * (r - thickness)))
+                        {
+                            _spriteBatch.Draw(texture, new Vector2(cx + x, cy + y), new Color(0, 0, 0));
+                        }
                     }
                 }
             }

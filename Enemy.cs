@@ -37,7 +37,7 @@ namespace tower_defense__Priv
             this.hp = hp;
             this.type = type;
             this.currentWaypointIndex = currentWaypointIndex;
-            this.progress = currentWaypointIndex / track.Waypoints.Count;
+            this.progress = currentWaypointIndex / track.Waypoints.Count-1;
             this.attEnd = false;
 
             this.hitbox = new Circle(pos, 20);
@@ -48,6 +48,11 @@ namespace tower_defense__Priv
             progress = currentWaypointIndex / track.Waypoints.Count;
 
             if (currentWaypointIndex >= track.Waypoints.Count)
+            {
+                attEnd = true;
+                return;
+            }
+            if (pos.X >= 1920 + hitbox.Radius+10 || pos.Y >= 1080 + hitbox.Radius+10 || pos.X <= 0 - hitbox.Radius-10 || pos.Y <= 0 - hitbox.Radius-10)
             {
                 attEnd = true;
                 return;

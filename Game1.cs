@@ -13,9 +13,8 @@ public class Game1 : Game
     private SpriteBatch _spriteBatch;
 
     //textures & fonts
-    private Texture2D pixel;
-    private SpriteFont font;
-    private SpriteFont font2;
+    private Texture2D pixel, GAr, CAr, YAr;
+    private SpriteFont font, font2;
 
     //track
     private Track track;
@@ -47,8 +46,12 @@ public class Game1 : Game
 
     //wave & stat board
     private bool waveStarted, waveEnded, cantPlace;
-    private int lives, currWaveNum;
+    private int currWaveNum;
     private Vector2 statBoardPos;
+
+    //losing & wining
+    private int lives;
+    private bool gameOver, gameWon;
 
     //screen
     private float sHeight, sWidth;
@@ -77,6 +80,11 @@ public class Game1 : Game
         // TODO: use this.Content to load your game content here
 
         pixel = Content.Load<Texture2D>("Pixel");
+        GAr = Content.Load<Texture2D>("green_ar");
+        CAr = Content.Load<Texture2D>("crimson_ar");
+        YAr = Content.Load<Texture2D>("yellow_ar");
+
+
         font = Content.Load<SpriteFont>("Font");
         font2 = Content.Load<SpriteFont>("Font2");
 
@@ -93,6 +101,8 @@ public class Game1 : Game
         currWaveNum = 1;
         sHeight = _graphics.PreferredBackBufferHeight;
         sWidth = _graphics.PreferredBackBufferWidth;
+        gameOver = false;
+        gameWon = false;
 
         money = 500;
         endWaveMoney = 1000;
@@ -130,14 +140,17 @@ public class Game1 : Game
                 new Rectangle(1100, 300, 50, 600),
                 new Rectangle(1100, 900, 300, 50),
                 new Rectangle(1400, 650, 50, 300),
-                new Rectangle(1400, 650, 520, 50)
+                new Rectangle(1400, 650, 520, 50),
+
+                new Rectangle(1920, 650, 50, 50) //extra part to win
+                
             ], pixel
         );
 
-        spawnPoint = new Vector2(track.TrackHB[0].Location.X + 25, track.TrackHB[0].Location.Y - 25);
+        spawnPoint = new Vector2(track.TrackHB[0].Location.X + 25, track.TrackHB[0].Location.Y);
 
         //enemies.Add(new Green(20, spawnPoint, pixel, track));
-        //enemies.Add(new Blue(20, spawnPoint, pixel, track));
+        enemies.Add(new Blue(spawnPoint, pixel, track));
         //heroes.Add(new Gunner(new Vector2(400, 400), pixel, enemies));
         //heroes.Add(new Gunner(new Vector2(700, 400), pixel, enemies));
         //heroes.Add(new Swordsman(new Vector2(460, 400), pixel, enemies));
@@ -159,6 +172,18 @@ public class Game1 : Game
     {
         kState = Keyboard.GetState();
         mState = Mouse.GetState();
+
+        if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || kState.IsKeyDown(Keys.RightControl) || kState.IsKeyDown(Keys.Escape))
+            Exit();
+
+
+        if (gameOver)
+        {
+            GameOver(gameTime);
+            return;
+        }
+
+
 
         if (kState.IsKeyDown(startWaveK) && oldKState.IsKeyUp(startWaveK) && !waveStarted) waveStarted = true;
 
@@ -196,10 +221,6 @@ public class Game1 : Game
         }
 
         SpawnEnemy(gameTime);
-
-        if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || kState.IsKeyDown(Keys.RightControl) || kState.IsKeyDown(Keys.Escape))
-            Exit();
-
 
 
         foreach (Enemy enemy in enemies)
@@ -281,6 +302,10 @@ public class Game1 : Game
                 i--;
             }
         }
+        if (lives <= 0)
+        {
+            gameOver = true;
+        }
     }
 
     public void SpawnEnemy(GameTime gameTime)
@@ -309,7 +334,7 @@ public class Game1 : Game
 
     public void EndWave(GameTime gameTime)
     {
-        
+
     }
 
     public void CantPlace(GameTime gameTime)
@@ -353,6 +378,11 @@ public class Game1 : Game
         }
     }
 
+    public void GameOver(GameTime gameTime)
+    {
+
+    }
+
     /*
     //
     //
@@ -370,6 +400,16 @@ public class Game1 : Game
 
         // TODO: Add your drawing code here
 
+        if (gameOver)
+        {
+            _spriteBatch.Begin();
+
+            DrawGameOver(gameTime, _spriteBatch);
+
+            _spriteBatch.End();
+            return;
+        }
+
         _spriteBatch.Begin();
         track.DrawTrack(gameTime, _spriteBatch);
         foreach (Enemy enemy in enemies)
@@ -386,6 +426,7 @@ public class Game1 : Game
         }
         DrawHeroSelect(gameTime);
         DrawStatsBoard(gameTime);
+        _spriteBatch.Draw(CAr, new Rectangle(1420, 980, 100, 100), Color.White);
         _spriteBatch.End();
 
         base.Draw(gameTime);
@@ -442,5 +483,10 @@ public class Game1 : Game
 
         //bottom
         _spriteBatch.Draw(pixel, new Rectangle(rectangle.Left, rectangle.Bottom - width, rectangle.Width, width), color);
+    }
+
+    public void DrawGameOver(GameTime gameTime, SpriteBatch spriteBatch)
+    {
+        spriteBatch.DrawString(font, "lost", new Vector2(sWidth / 2, sHeight / 2), Color.Black);
     }
 }

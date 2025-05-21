@@ -45,7 +45,7 @@ namespace tower_defense__Priv
 
         public void Update(GameTime gameTime){
 
-            progress = currentWaypointIndex / track.Waypoints.Count;
+            progress = currentWaypointIndex / track.Waypoints.Count-1;
 
             if (currentWaypointIndex >= track.Waypoints.Count)
             {

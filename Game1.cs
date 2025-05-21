@@ -32,7 +32,6 @@ public class Game1 : Game
 
     //enemies
     private List<Enemy> enemies = new List<Enemy>();
-    private double[] lastBloon = new double[3];
     private Vector2 spawnPoint;
 
     //hover & keys
@@ -48,6 +47,8 @@ public class Game1 : Game
     private bool waveStarted, waveEnded, cantPlace;
     private int currWaveNum;
     private Vector2 statBoardPos;
+    private int[] amoutOfEnemiesInWave, spawnedEnemiesInWave;
+    private double[] lastBloon, lastBloonDelay;
 
     //losing & wining
     private int lives;
@@ -80,9 +81,10 @@ public class Game1 : Game
         // TODO: use this.Content to load your game content here
 
         pixel = Content.Load<Texture2D>("Pixel");
-        GAr = Content.Load<Texture2D>("green_ar");
-        CAr = Content.Load<Texture2D>("crimson_ar");
-        YAr = Content.Load<Texture2D>("yellow_ar");
+        
+        GAr = Content.Load<Texture2D>("green_ar");      //
+        CAr = Content.Load<Texture2D>("crimson_ar");    //Hade idé men glömt.
+        YAr = Content.Load<Texture2D>("yellow_ar");     //
 
 
         font = Content.Load<SpriteFont>("Font");
@@ -109,6 +111,30 @@ public class Game1 : Game
         cost = [
             1000,
             500
+        ];
+        amoutOfEnemiesInWave = [
+            30,
+            0,
+            0,
+            0
+        ];
+        lastBloonDelay = [
+            3,
+            3,
+            3,
+            3
+        ];
+        lastBloon = [
+            0,
+            0,
+            0,
+            0
+        ];
+        spawnedEnemiesInWave = [
+            0,
+            0,
+            0,
+            0
         ];
 
         hoverPos = new Vector2(sWidth + 200, sHeight + 200);
@@ -147,10 +173,10 @@ public class Game1 : Game
             ], pixel
         );
 
-        spawnPoint = new Vector2(track.TrackHB[0].Location.X + 25, track.TrackHB[0].Location.Y);
+        spawnPoint = new Vector2(track.TrackHB[0].Location.X + 25, track.TrackHB[0].Location.Y - 25);
 
         //enemies.Add(new Green(20, spawnPoint, pixel, track));
-        enemies.Add(new Blue(spawnPoint, pixel, track));
+        //enemies.Add(new Black(spawnPoint, pixel, track));
         //heroes.Add(new Gunner(new Vector2(400, 400), pixel, enemies));
         //heroes.Add(new Gunner(new Vector2(700, 400), pixel, enemies));
         //heroes.Add(new Swordsman(new Vector2(460, 400), pixel, enemies));
@@ -310,18 +336,50 @@ public class Game1 : Game
 
     public void SpawnEnemy(GameTime gameTime)
     {
-        if (gameTime.TotalGameTime.TotalSeconds > lastBloon[(int)EnemyType.Green] + 1 && waveStarted)
+        
+
+        if (gameTime.TotalGameTime.TotalSeconds > lastBloon[(int)EnemyType.Red] + lastBloonDelay[(int)EnemyType.Red] &&
+            waveStarted &&
+            spawnedEnemiesInWave[(int)EnemyType.Red] < amoutOfEnemiesInWave[(int)EnemyType.Red])
+        {
+            lastBloon[(int)EnemyType.Red] = gameTime.TotalGameTime.TotalSeconds;
+            enemies.Add(new Red(spawnPoint, pixel, track));
+            spawnedEnemiesInWave[(int)EnemyType.Red]++;
+        }
+
+        if (gameTime.TotalGameTime.TotalSeconds > lastBloon[(int)EnemyType.Green] + lastBloonDelay[(int)EnemyType.Green] &&
+        waveStarted &&
+        spawnedEnemiesInWave[(int)EnemyType.Green] < amoutOfEnemiesInWave[(int)EnemyType.Green])
         {
             lastBloon[(int)EnemyType.Green] = gameTime.TotalGameTime.TotalSeconds;
             enemies.Add(new Green(spawnPoint, pixel, track));
-
+            spawnedEnemiesInWave[(int)EnemyType.Green]++;
         }
 
-        if (gameTime.TotalGameTime.TotalSeconds > lastBloon[(int)EnemyType.Blue] + 3 && waveStarted)
+        if (gameTime.TotalGameTime.TotalSeconds > lastBloon[(int)EnemyType.Blue] + lastBloonDelay[(int)EnemyType.Blue] &&
+        waveStarted &&
+        spawnedEnemiesInWave[(int)EnemyType.Blue] < amoutOfEnemiesInWave[(int)EnemyType.Blue])
         {
             lastBloon[(int)EnemyType.Blue] = gameTime.TotalGameTime.TotalSeconds;
             enemies.Add(new Blue(spawnPoint, pixel, track));
+            spawnedEnemiesInWave[(int)EnemyType.Blue]++;
         }
+    }
+
+    public void checkWaveEnd(GameTime gameTime)
+    {
+        foreach (int EnemiesInWave in amoutOfEnemiesInWave)
+        {
+            foreach (int spawnedEnemies in spawnedEnemiesInWave)
+            {
+                if (!(spawnedEnemies >= EnemiesInWave) && waveStarted)
+                {
+                    return;
+                }
+            }
+        }
+        waveStarted = false;
+        currWaveNum++;
     }
 
     public void NewWave(GameTime gameTime)
@@ -426,7 +484,6 @@ public class Game1 : Game
         }
         DrawHeroSelect(gameTime);
         DrawStatsBoard(gameTime);
-        _spriteBatch.Draw(CAr, new Rectangle(1420, 980, 100, 100), Color.White);
         _spriteBatch.End();
 
         base.Draw(gameTime);

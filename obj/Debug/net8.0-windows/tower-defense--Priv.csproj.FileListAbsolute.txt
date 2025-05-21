@@ -114,3 +114,4 @@ C:\Github\tower-defense--Priv\bin\Debug\net8.0-windows\Content\Font.xnb
 C:\Users\Gamer\Documents\GitHub\tower-defense--Priv\bin\Debug\net8.0-windows\Content\Font.xnb
 C:\Users\tores\OneDrive\Documents\GitHub\tower-defense--Priv\bin\Debug\net8.0-windows\Content\Font.xnb
 C:\Users\tores\OneDrive\Documents\GitHub\tower-defense--Priv\bin\Debug\net8.0-windows\Content\Font2.xnb
+C:\Github\tower-defense--Priv\bin\Debug\net8.0-windows\Content\Font2.xnb

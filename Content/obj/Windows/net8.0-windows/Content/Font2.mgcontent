@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SourceFile>C:/Users/tores/OneDrive/Documents/GitHub/tower-defense--Priv/Content/Font2.spritefont</SourceFile>
-  <SourceTime>2025-05-20T13:03:54.5390464+02:00</SourceTime>
-  <DestFile>C:/Users/tores/OneDrive/Documents/GitHub/tower-defense--Priv/Content/bin/Windows/Content/Font2.xnb</DestFile>
-  <DestTime>2025-05-20T13:03:56.8343339+02:00</DestTime>
+  <SourceFile>C:/Github/tower-defense--Priv/Content/Font2.spritefont</SourceFile>
+  <SourceTime>2025-05-21T08:32:15.276202+02:00</SourceTime>
+  <DestFile>C:/Github/tower-defense--Priv/Content/bin/Windows/Content/Font2.xnb</DestFile>
+  <DestTime>2025-05-21T10:04:36.1849725+02:00</DestTime>
   <Importer>FontDescriptionImporter</Importer>
   <ImporterTime>2024-08-16T19:05:56+02:00</ImporterTime>
   <Processor>FontDescriptionProcessor</Processor>

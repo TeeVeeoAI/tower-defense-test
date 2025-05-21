@@ -5,6 +5,6 @@ namespace tower_defense__Priv
         Red = 0,
         Green = 1,
         Blue = 2,
-        Gray = 3
+        Black = 3
     }
 }

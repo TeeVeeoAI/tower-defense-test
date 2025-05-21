@@ -47,7 +47,7 @@ public class Game1 : Game
     private bool waveStarted, waveEnded, cantPlace;
     private int currWaveNum;
     private Vector2 statBoardPos;
-    private int[] amoutOfEnemiesInWave, spawnedEnemiesInWave;
+    private int[] amoutOfEnemiesInWave, spawnedEnemiesInWave, enemiesKilledInWave;
     private double[] lastBloon, lastBloonDelay;
 
     //losing & wining
@@ -119,10 +119,10 @@ public class Game1 : Game
             0
         ];
         lastBloonDelay = [
-            3,
-            3,
-            3,
-            3
+            1,
+            1,
+            1,
+            1
         ];
         lastBloon = [
             0,
@@ -131,6 +131,12 @@ public class Game1 : Game
             0
         ];
         spawnedEnemiesInWave = [
+            0,
+            0,
+            0,
+            0
+        ];
+        enemiesKilledInWave = [
             0,
             0,
             0,
@@ -248,6 +254,7 @@ public class Game1 : Game
 
         SpawnEnemy(gameTime);
 
+        CheckWaveEnd(gameTime);
 
         foreach (Enemy enemy in enemies)
         {
@@ -293,15 +300,27 @@ public class Game1 : Game
                         {
                             money += 20;
 
-                            if (enemies[i] is Blue)
+                            if (enemies[i] is Black)
+                            {
+                                enemies.Add(new Blue(new Vector2(enemies[i].Pos.X, enemies[i].Pos.Y), pixel, track, enemies[i].CurrentWaypointIndex));
+                                money += 60;
+                                enemiesKilledInWave[(int)EnemyType.Black]++;
+                            }
+                            else if (enemies[i] is Blue)
                             {
                                 enemies.Add(new Green(new Vector2(enemies[i].Pos.X, enemies[i].Pos.Y), pixel, track, enemies[i].CurrentWaypointIndex));
                                 money += 40;
+                                enemiesKilledInWave[(int)EnemyType.Blue]++;
                             }
                             else if (enemies[i] is Green)
                             {
                                 enemies.Add(new Red(new Vector2(enemies[i].Pos.X, enemies[i].Pos.Y), pixel, track, enemies[i].CurrentWaypointIndex));
                                 money += 20;
+                                enemiesKilledInWave[(int)EnemyType.Green]++;
+                            }
+                            else if (enemies[i] is Red)
+                            {
+                                enemiesKilledInWave[(int)EnemyType.Red]++;
                             }
                             enemies.RemoveAt(i);
                             i--;
@@ -366,33 +385,36 @@ public class Game1 : Game
         }
     }
 
-    public void checkWaveEnd(GameTime gameTime)
+    public void CheckWaveEnd(GameTime gameTime)
     {
         foreach (int EnemiesInWave in amoutOfEnemiesInWave)
         {
-            foreach (int spawnedEnemies in spawnedEnemiesInWave)
+            foreach (int killedInWave in enemiesKilledInWave)
             {
-                if (!(spawnedEnemies >= EnemiesInWave) && waveStarted)
+                if (killedInWave < EnemiesInWave)
                 {
                     return;
                 }
             }
         }
-        waveStarted = false;
-        currWaveNum++;
-    }
-
-    public void NewWave(GameTime gameTime)
-    {
-        if (waveEnded)
-        {
-            money += Math.Floor(endWaveMoney * (currWaveNum * 0.7f));
-        }
+        waveEnded = true;
+        EndWave(gameTime);
     }
 
     public void EndWave(GameTime gameTime)
     {
+        if (waveEnded)
+        {
+            waveStarted = false;
+            NewWave(gameTime);
+            currWaveNum++;
+            waveEnded = false;
+        }
+    }
 
+    public void NewWave(GameTime gameTime)
+    {
+        money += Math.Floor(endWaveMoney * (currWaveNum * 0.7f));
     }
 
     public void CantPlace(GameTime gameTime)

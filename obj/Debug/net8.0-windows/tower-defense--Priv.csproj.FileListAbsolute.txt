@@ -151,3 +151,7 @@ C:\Users\tores\OneDrive\Documents\GitHub\tower-defense-test\obj\Debug\net8.0-win
 C:\Users\tores\OneDrive\Documents\GitHub\tower-defense-test\obj\Debug\net8.0-windows\tower-defense--Priv.pdb
 C:\Users\tores\OneDrive\Documents\GitHub\tower-defense-test\obj\Debug\net8.0-windows\tower-defense--Priv.genruntimeconfig.cache
 C:\Users\tores\OneDrive\Documents\GitHub\tower-defense-test\obj\Debug\net8.0-windows\ref\tower-defense--Priv.dll
+C:\Users\Gamer\Documents\GitHub\tower-defense--Priv\bin\Debug\net8.0-windows\Content\crimson_ar.xnb
+C:\Users\Gamer\Documents\GitHub\tower-defense--Priv\bin\Debug\net8.0-windows\Content\Font2.xnb
+C:\Users\Gamer\Documents\GitHub\tower-defense--Priv\bin\Debug\net8.0-windows\Content\green_ar.xnb
+C:\Users\Gamer\Documents\GitHub\tower-defense--Priv\bin\Debug\net8.0-windows\Content\yellow_ar.xnb

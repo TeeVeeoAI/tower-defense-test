@@ -47,8 +47,8 @@ public class Game1 : Game
     private bool waveStarted, waveEnded, cantPlace;
     private int currWaveNum;
     private Vector2 statBoardPos;
-    private int[] amoutOfEnemiesInWave, spawnedEnemiesInWave, enemiesKilledInWave;
-    private double[] lastBloon, lastBloonDelay;
+    private Waves.Waves wave;
+    private double[] lastBloon;
 
     //losing & wining
     private int lives;
@@ -112,36 +112,40 @@ public class Game1 : Game
             1000,
             500
         ];
-        amoutOfEnemiesInWave = [
-            30,
-            0,
-            0,
-            0
-        ];
-        lastBloonDelay = [
-            1,
-            1,
-            1,
-            1
-        ];
         lastBloon = [
             0,
             0,
             0,
             0
         ];
-        spawnedEnemiesInWave = [
-            0,
-            0,
-            0,
-            0
-        ];
-        enemiesKilledInWave = [
-            0,
-            0,
-            0,
-            0
-        ];
+        
+
+        wave = new Waves.Waves(
+            [   //amoutOfEnemiesInWave
+                30, 
+                0,
+                0,
+                0
+            ],
+            [   //lastBloonDelay
+                1,
+                1,
+                1,
+                1
+            ],
+            [   //spawnedEnemiesInWave
+                0,
+                0,
+                0,
+                0
+            ],
+            [   //enemiesKilledInWave
+                0,
+                0,
+                0,
+                0
+            ]
+        );
 
         hoverPos = new Vector2(sWidth + 200, sHeight + 200);
         hovering = new HoverHero(hoverPos, pixel);
@@ -304,23 +308,23 @@ public class Game1 : Game
                             {
                                 enemies.Add(new Blue(new Vector2(enemies[i].Pos.X, enemies[i].Pos.Y), pixel, track, enemies[i].CurrentWaypointIndex));
                                 money += 60;
-                                enemiesKilledInWave[(int)EnemyType.Black]++;
+                                wave.EnemiesKilledInWave[(int)EnemyType.Black]++;
                             }
                             else if (enemies[i] is Blue)
                             {
                                 enemies.Add(new Green(new Vector2(enemies[i].Pos.X, enemies[i].Pos.Y), pixel, track, enemies[i].CurrentWaypointIndex));
                                 money += 40;
-                                enemiesKilledInWave[(int)EnemyType.Blue]++;
+                                wave.EnemiesKilledInWave[(int)EnemyType.Blue]++;
                             }
                             else if (enemies[i] is Green)
                             {
                                 enemies.Add(new Red(new Vector2(enemies[i].Pos.X, enemies[i].Pos.Y), pixel, track, enemies[i].CurrentWaypointIndex));
                                 money += 20;
-                                enemiesKilledInWave[(int)EnemyType.Green]++;
+                                wave.EnemiesKilledInWave[(int)EnemyType.Green]++;
                             }
                             else if (enemies[i] is Red)
                             {
-                                enemiesKilledInWave[(int)EnemyType.Red]++;
+                                wave.EnemiesKilledInWave[(int)EnemyType.Red]++;
                             }
                             enemies.RemoveAt(i);
                             i--;
@@ -357,39 +361,39 @@ public class Game1 : Game
     {
         
 
-        if (gameTime.TotalGameTime.TotalSeconds > lastBloon[(int)EnemyType.Red] + lastBloonDelay[(int)EnemyType.Red] &&
+        if (gameTime.TotalGameTime.TotalSeconds > lastBloon[(int)EnemyType.Red] + wave.LastBloonDelay[(int)EnemyType.Red] &&
             waveStarted &&
-            spawnedEnemiesInWave[(int)EnemyType.Red] < amoutOfEnemiesInWave[(int)EnemyType.Red])
+            wave.SpawnedEnemiesInWave[(int)EnemyType.Red] < wave.AmoutOfEnemiesInWave[(int)EnemyType.Red])
         {
             lastBloon[(int)EnemyType.Red] = gameTime.TotalGameTime.TotalSeconds;
             enemies.Add(new Red(spawnPoint, pixel, track));
-            spawnedEnemiesInWave[(int)EnemyType.Red]++;
+            wave.SpawnedEnemiesInWave[(int)EnemyType.Red]++;
         }
 
-        if (gameTime.TotalGameTime.TotalSeconds > lastBloon[(int)EnemyType.Green] + lastBloonDelay[(int)EnemyType.Green] &&
+        if (gameTime.TotalGameTime.TotalSeconds > lastBloon[(int)EnemyType.Green] + wave.LastBloonDelay[(int)EnemyType.Green] &&
         waveStarted &&
-        spawnedEnemiesInWave[(int)EnemyType.Green] < amoutOfEnemiesInWave[(int)EnemyType.Green])
+        wave.SpawnedEnemiesInWave[(int)EnemyType.Green] < wave.AmoutOfEnemiesInWave[(int)EnemyType.Green])
         {
             lastBloon[(int)EnemyType.Green] = gameTime.TotalGameTime.TotalSeconds;
             enemies.Add(new Green(spawnPoint, pixel, track));
-            spawnedEnemiesInWave[(int)EnemyType.Green]++;
+            wave.SpawnedEnemiesInWave[(int)EnemyType.Green]++;
         }
 
-        if (gameTime.TotalGameTime.TotalSeconds > lastBloon[(int)EnemyType.Blue] + lastBloonDelay[(int)EnemyType.Blue] &&
+        if (gameTime.TotalGameTime.TotalSeconds > lastBloon[(int)EnemyType.Blue] + wave.LastBloonDelay[(int)EnemyType.Blue] &&
         waveStarted &&
-        spawnedEnemiesInWave[(int)EnemyType.Blue] < amoutOfEnemiesInWave[(int)EnemyType.Blue])
+        wave.SpawnedEnemiesInWave[(int)EnemyType.Blue] < wave.AmoutOfEnemiesInWave[(int)EnemyType.Blue])
         {
             lastBloon[(int)EnemyType.Blue] = gameTime.TotalGameTime.TotalSeconds;
             enemies.Add(new Blue(spawnPoint, pixel, track));
-            spawnedEnemiesInWave[(int)EnemyType.Blue]++;
+            wave.SpawnedEnemiesInWave[(int)EnemyType.Blue]++;
         }
     }
 
     public void CheckWaveEnd(GameTime gameTime)
     {
-        foreach (int EnemiesInWave in amoutOfEnemiesInWave)
+        foreach (int EnemiesInWave in wave.AmoutOfEnemiesInWave)
         {
-            foreach (int killedInWave in enemiesKilledInWave)
+            foreach (int killedInWave in wave.EnemiesKilledInWave)
             {
                 if (killedInWave < EnemiesInWave)
                 {

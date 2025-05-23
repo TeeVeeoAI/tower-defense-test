@@ -4,12 +4,12 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/tores/OneDrive/Documents/GitHub/tower-defense-test/Content/crimson_ar.png</File>
-    <File>C:/Users/tores/OneDrive/Documents/GitHub/tower-defense-test/Content/Font.spritefont</File>
-    <File>C:/Users/tores/OneDrive/Documents/GitHub/tower-defense-test/Content/Font2.spritefont</File>
-    <File>C:/Users/tores/OneDrive/Documents/GitHub/tower-defense-test/Content/green_ar.png</File>
-    <File>C:/Users/tores/OneDrive/Documents/GitHub/tower-defense-test/Content/Pixel.png</File>
-    <File>C:/Users/tores/OneDrive/Documents/GitHub/tower-defense-test/Content/yellow_ar.png</File>
+    <File>C:/Users/Gamer/Documents/GitHub/tower-defense--Priv/Content/crimson_ar.png</File>
+    <File>C:/Users/Gamer/Documents/GitHub/tower-defense--Priv/Content/Font.spritefont</File>
+    <File>C:/Users/Gamer/Documents/GitHub/tower-defense--Priv/Content/Font2.spritefont</File>
+    <File>C:/Users/Gamer/Documents/GitHub/tower-defense--Priv/Content/green_ar.png</File>
+    <File>C:/Users/Gamer/Documents/GitHub/tower-defense--Priv/Content/Pixel.png</File>
+    <File>C:/Users/Gamer/Documents/GitHub/tower-defense--Priv/Content/yellow_ar.png</File>
   </SourceFiles>
   <DestFiles>
     <File xsi:nil="true" />

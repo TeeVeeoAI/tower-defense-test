@@ -407,15 +407,15 @@ public class Game1 : Game
         if (waveEnded)
         {
             waveStarted = false;
-            NewWave(gameTime);
+            money += Math.Floor(endWaveMoney * (currWaveNum * 0.7f));
             currWaveNum++;
+            NewWave(gameTime);
             waveEnded = false;
         }
     }
 
     public void NewWave(GameTime gameTime)
     {
-        money += Math.Floor(endWaveMoney * (currWaveNum * 0.7f));
         wave = new Waves.Waves(wave, currWaveNum);
     }
 
@@ -508,7 +508,7 @@ public class Game1 : Game
         }
         DrawHeroSelect(gameTime);
         DrawStatsBoard(gameTime);
-        _spriteBatch.DrawString(font, wave.AmoutOfEnemiesInWave.ToString() + " : " + wave.SpawnedEnemiesInWave.ToString() + " : " + wave.EnemiesKilledInWave.ToString(), new Vector2(100, 100), Color.White);
+        _spriteBatch.DrawString(font, wave.AmoutOfEnemiesInWave[0].ToString() + "\n" + wave.SpawnedEnemiesInWave[0].ToString() + "\n" + wave.EnemiesKilledInWave[0].ToString(), new Vector2(100, 100), Color.White);
         _spriteBatch.End();
 
         base.Draw(gameTime);

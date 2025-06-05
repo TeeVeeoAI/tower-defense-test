@@ -1,0 +1,32 @@
+{
+    "waves": [
+        {
+            "waveNumber": 1,
+            "amountOfEnemiesInWave": [10, 0, 0, 0],
+            "lastBloonDelay": [1.0, 0.0, 0.0, 0.0],
+            "spawnedEnemiesInWave": [0, 0, 0, 0],
+            "enemiesKilledInWave": [0, 0, 0, 0]
+        },
+        {
+            "waveNumber": 2,
+            "amountOfEnemiesInWave": [5, 10, 0, 0],
+            "lastBloonDelay": [0.8, 1.2, 0.0, 0.0],
+            "spawnedEnemiesInWave": [0, 0, 0, 0],
+            "enemiesKilledInWave": [0, 0, 0, 0]
+        },
+        {
+            "waveNumber": 3,
+            "amountOfEnemiesInWave": [0, 10, 10, 0],
+            "lastBloonDelay": [0.0, 1.0, 0.5, 0.0],
+            "spawnedEnemiesInWave": [0, 0, 0, 0],
+            "enemiesKilledInWave": [0, 0, 0, 0]
+        },
+        {
+            "waveNumber": 4,
+            "amountOfEnemiesInWave": [0, 0, 5, 5],
+            "lastBloonDelay": [0.0, 0.0, 0.6, 1.0],
+            "spawnedEnemiesInWave": [0, 0, 0, 0],
+            "enemiesKilledInWave": [0, 0, 0, 0]
+        }
+    ]
+}

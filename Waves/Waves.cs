@@ -26,19 +26,19 @@ namespace tower_defense__Priv.Waves
         }
         public Waves(Waves wave, int currWaveNum)
         {
-            for (int i = 0; i < wave.amoutOfEnemiesInWave.Length; i++)
+            for (int i = 0; i < wave.amoutOfEnemiesInWave.GetLength(0); i++)
             {
                 wave.amoutOfEnemiesInWave[i] = (int)(wave.amoutOfEnemiesInWave[i] * (currWaveNum * 0.7));
             }
-            for (int i = 0; i < wave.lastBloonDelay.Length; i++)
+            for (int i = 0; i < wave.lastBloonDelay.GetLength(0); i++)
             {
                 wave.lastBloonDelay[i] = 2 * i+1;
             }
-            for (int i = 0; i < wave.spawnedEnemiesInWave.Length; i++)
+            for (int i = 0; i < wave.spawnedEnemiesInWave.GetLength(0); i++)
             {
                 wave.spawnedEnemiesInWave = [0, 0, 0, 0];
             }
-            for (int i = 0; i < wave.enemiesKilledInWave.Length; i++)
+            for (int i = 0; i < wave.enemiesKilledInWave.GetLength(0); i++)
             {
                 wave.enemiesKilledInWave = [0, 0, 0, 0];
             }
